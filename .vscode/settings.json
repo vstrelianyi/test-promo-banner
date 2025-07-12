@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "editor.rulers": [140],
+  "prettier.configPath": "_.prettierrc",
+  "prettier.requireConfig": true
+}
