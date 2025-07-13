@@ -10,7 +10,9 @@ import { TStation, } from '@/types/TStation';
 
 export const revalidate = 60;
 
-const PageStation = async ( { params, } : { params : { 'station-id' : string, }, }, ) => {
+type TParams = Promise<{ 'station-id' : string, }>;
+
+const PageStation = async ( { params, } : { params : TParams, }, ) => {
   const { 'station-id': stationId, } = await params;
   const station : TStation | undefined = stations.find( ( station, ) => station.id === Number( stationId, ), );
 
@@ -111,7 +113,7 @@ export async function generateStaticParams() {
   } ), );
 }
 
-export async function generateMetadata ( { params, } : { params : { 'station-id' : string, }, }, ) : Promise<Metadata> {
+export async function generateMetadata ( { params, } : { params : TParams, }, ) : Promise<Metadata> {
   const {
     'station-id': stationId,
   } = await params;
