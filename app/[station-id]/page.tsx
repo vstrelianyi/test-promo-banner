@@ -8,6 +8,8 @@ import stations from '@/constants/stations.json';
 
 import { TStation, } from '@/types/TStation';
 
+export const revalidate = 60;
+
 const PageStation = async ( { params, } : { params : { 'station-id' : string, }, }, ) => {
   const { 'station-id': stationId, } = await params;
   const station : TStation | undefined = stations.find( ( station, ) => station.id === Number( stationId, ), );
