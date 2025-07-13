@@ -1,103 +1,112 @@
+'use client';
+
 import Image from 'next/image';
+import Link from 'next/link';
+import { useState, } from 'react';
+
+import Phone from '@/components/Phone/Phone';
+
+import stations from './stations.json';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={ 180 }
-          height={ 38 }
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{ ' ' }
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [ currentStationIndex, setCurrentStationIndex, ] = useState( 0, );
+  const station = stations[currentStationIndex];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={ 20 }
-              height={ 20 }
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={ 16 }
-            height={ 16 }
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={ 16 }
-            height={ 16 }
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={ 16 }
-            height={ 16 }
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  // Handle previous station
+  const handleClickPrev = () => {
+    setCurrentStationIndex( ( prevIndex, ) =>
+      prevIndex === 0 ? stations.length - 1 : prevIndex - 1,
+    );
+  };
+
+  // Handle next station
+  const handleClickNext = () => {
+    setCurrentStationIndex( ( prevIndex, ) =>
+      prevIndex === stations.length - 1 ? 0 : prevIndex + 1,
+    );
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="container">
+        <main className="flex flex-col">
+
+          <section className="hidden md:flex w-full bg-blue border-[1px] border-[#BFDBFE] rounded-[16px] px-[50px]">
+
+            { /* COL1 */ }
+            <div className="flex gap-[24px] items-center shrink-0 grow-0 py-[74px]">
+              <Image
+                src="/images/qr-code.png"
+                alt="logo"
+                width={ 108 }
+                height={ 108 }
+              />
+              <div className="flex flex-col gap-[10px]">
+                <Image
+                  src="/images/btn-appstore.png"
+                  alt="logo"
+                  width={ 162 }
+                  height={ 48 }
+                />
+                <Image
+                  src="/images/btn-googleplay.png"
+                  alt="logo"
+                  width={ 162 }
+                  height={ 48 }
+                />
+              </div>
+            </div>
+
+            { /* COL2 */ }
+            <div className="shrink-0 grow-0 relative w-[184px] mx-[75px]">
+              <Phone
+                className="absolute bottom-0 left-0"
+                station={ station }
+                handleClickPrev={ handleClickPrev }
+                handleClickNext={ handleClickNext }
+              />
+              { /* <div className="image-wrapper absolute bottom-0 left-0">
+                <Image
+                  src="/images/phone.png"
+                  alt="logo"
+                  width={ 200 }
+                  height={ 431 }
+                />
+              </div> */ }
+            </div>
+
+            { /* COL3 */ }
+            <div className="flex flex-col justify-center items-end gap-[10px] py-[74px]">
+              <h1 className="text-[28px] font-bold text-primary">
+                Continue listening through the app
+              </h1>
+              <p className="text-right"><b>{ station.title }</b> broadcasts are available on our  mobile app. Listening to the live broadcast provides an immediate solution anywhere and in any situation.</p>
+              <Link
+                className="flex items-center gap-[10px] hover:underline"
+                href="/"
+              >
+                <svg
+                  width="8"
+                  height="14"
+                  viewBox="0 0 8 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.99996 1.66669L1.66663 7.00002L6.99996 12.3334"
+                    stroke="#111827"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span className="font-[600]">More information</span>
+              </Link>
+            </div>
+
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
