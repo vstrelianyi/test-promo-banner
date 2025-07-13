@@ -1,4 +1,8 @@
+'use client';
+
 import Image from 'next/image';
+import Link from 'next/link';
+import { useState, } from 'react';
 import { BiDotsVerticalRounded, } from 'react-icons/bi';
 import { FaSignal, FaWifi, } from 'react-icons/fa';
 import { FaChromecast, } from 'react-icons/fa';
@@ -11,19 +15,16 @@ import { IoShareSocialOutline, } from 'react-icons/io5';
 
 import { cn, } from '@/utils/cn';
 
+import { TStation, } from '@/types/TStation';
+
 interface TPropsPhone {
   className : string;
-  station : {
-    color : string | null;
-    id : number;
-    logo : string;
-    title : string;
-  };
-  handleClickPrev : () => void;
-  handleClickNext : () => void;
+  station : TStation;
 }
-const Phone = ( { className, station, handleClickPrev, handleClickNext, } : TPropsPhone, ) => {
+const Phone = ( { className, station, } : TPropsPhone, ) => {
   console.log( station, );
+
+  const [ currentStationIndex, setCurrentStationIndex, ] = useState( station?.id, );
 
   return (
     <div
@@ -88,34 +89,30 @@ const Phone = ( { className, station, handleClickPrev, handleClickNext, } : TPro
       <div className="PhoneMain flex flex-col justify-center items-center pt-[30px] mb-[10px] w-full">
         <span className="text-white text-[18px] font-[600] text-center mb-[20px]">{ station.title }</span>
         <div className="flex justify-between items-center w-full">
-          <button
+          <Link
             className="cursor-pointer"
-            onClick={ () => {
-              handleClickPrev();
-            } }
+            href={ `/${ currentStationIndex - 1 }` }
           >
             <FaChevronLeft
               color="white"
               size={ 20 }
             />
-          </button>
+          </Link>
           <Image
             src={ station.logo }
             alt={ station.title }
             width={ 100 }
             height={ 100 }
           />
-          <button
+          <Link
             className="cursor-pointer"
-            onClick={ () => {
-              handleClickNext();
-            } }
+            href={ `/${ currentStationIndex + 1 }` }
           >
             <FaChevronRight
               color="white"
               size={ 20 }
             />
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -125,14 +122,14 @@ const Phone = ( { className, station, handleClickPrev, handleClickNext, } : TPro
         src="/images/phone-volume.png"
         alt="phone-bottom"
         width={ 140 }
-        height={ 100 }
+        height={ 16 }
       />
 
       <Image
         src="/images/phone-controls.png"
         alt={ station.title }
-        width={ 150 }
-        height={ 100 }
+        width={ 140 }
+        height={ 48 }
       />
 
       { /* STATIONLOGO */ }
@@ -171,10 +168,10 @@ const Phone = ( { className, station, handleClickPrev, handleClickNext, } : TPro
             y2="88"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#4F46E5"/>
+            <stop stopColor="#4F46E5"/>
             <stop
               offset="1"
-              stop-color="#453EC9"
+              stopColor="#453EC9"
             />
           </linearGradient>
         </defs>

@@ -1,112 +1,85 @@
-'use client';
-
+import { Metadata, } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, } from 'react';
 
-import Phone from '@/components/Phone/Phone';
+import stations from '@/constants/stations.json';
 
-import stations from './stations.json';
-
-export default function Home() {
-  const [ currentStationIndex, setCurrentStationIndex, ] = useState( 0, );
-  const station = stations[currentStationIndex];
-
-  // Handle previous station
-  const handleClickPrev = () => {
-    setCurrentStationIndex( ( prevIndex, ) =>
-      prevIndex === 0 ? stations.length - 1 : prevIndex - 1,
-    );
-  };
-
-  // Handle next station
-  const handleClickNext = () => {
-    setCurrentStationIndex( ( prevIndex, ) =>
-      prevIndex === stations.length - 1 ? 0 : prevIndex + 1,
-    );
-  };
-
+export default function PageStations() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="container">
         <main className="flex flex-col">
 
-          <section className="hidden md:flex w-full bg-blue border-[1px] border-[#BFDBFE] rounded-[16px] px-[50px]">
-
-            { /* COL1 */ }
-            <div className="flex gap-[24px] items-center shrink-0 grow-0 py-[74px]">
-              <Image
-                src="/images/qr-code.png"
-                alt="logo"
-                width={ 108 }
-                height={ 108 }
-              />
-              <div className="flex flex-col gap-[10px]">
-                <Image
-                  src="/images/btn-appstore.png"
-                  alt="logo"
-                  width={ 162 }
-                  height={ 48 }
-                />
-                <Image
-                  src="/images/btn-googleplay.png"
-                  alt="logo"
-                  width={ 162 }
-                  height={ 48 }
-                />
+          { /* Stations Table */ }
+          <section className="mt-8 w-full">
+            <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h2 className="text-xl font-semibold text-gray-900">All Stations</h2>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        ID
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Station
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Color
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    { stations.map( ( station, ) => (
+                      <tr
+                        key={ station.id }
+                        className="hover:bg-gray-50"
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          { station.id }
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <Link href={ `/${ station.id }` }>{ station.title }</Link>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          { station.color ? (
+                            <div className="flex items-center">
+                              <div
+                                className="w-4 h-4 rounded-full mr-2"
+                                style={ { backgroundColor: station.color, } }
+                              ></div>
+                              <span className="text-sm text-gray-500">{ station.color }</span>
+                            </div>
+                          ) : (
+                            <span className="text-sm text-gray-400">No color</span>
+                          ) }
+                        </td>
+                      </tr>
+                    ), ) }
+                  </tbody>
+                </table>
               </div>
             </div>
-
-            { /* COL2 */ }
-            <div className="shrink-0 grow-0 relative w-[184px] mx-[75px]">
-              <Phone
-                className="absolute bottom-0 left-0"
-                station={ station }
-                handleClickPrev={ handleClickPrev }
-                handleClickNext={ handleClickNext }
-              />
-              { /* <div className="image-wrapper absolute bottom-0 left-0">
-                <Image
-                  src="/images/phone.png"
-                  alt="logo"
-                  width={ 200 }
-                  height={ 431 }
-                />
-              </div> */ }
-            </div>
-
-            { /* COL3 */ }
-            <div className="flex flex-col justify-center items-end gap-[10px] py-[74px]">
-              <h1 className="text-[28px] font-bold text-primary">
-                Continue listening through the app
-              </h1>
-              <p className="text-right"><b>{ station.title }</b> broadcasts are available on our  mobile app. Listening to the live broadcast provides an immediate solution anywhere and in any situation.</p>
-              <Link
-                className="flex items-center gap-[10px] hover:underline"
-                href="/"
-              >
-                <svg
-                  width="8"
-                  height="14"
-                  viewBox="0 0 8 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6.99996 1.66669L1.66663 7.00002L6.99996 12.3334"
-                    stroke="#111827"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <span className="font-[600]">More information</span>
-              </Link>
-            </div>
-
           </section>
+
         </main>
       </div>
     </div>
   );
+}
+
+export async function generateMetadata () : Promise<Metadata> {
+  return {
+    title: 'Stations',
+    description: 'Listen to Stations',
+    openGraph: {
+      title: 'Stations',
+      description: 'Listen to Stations',
+    },
+    // alternates: {
+    //   canonical: '',
+    // },
+  };
 }
