@@ -22,10 +22,6 @@ interface TPropsPhone {
   station : TStation;
 }
 const Phone = ( { className, station, } : TPropsPhone, ) => {
-  console.log( station, );
-
-  const [ currentStationIndex, setCurrentStationIndex, ] = useState( station?.id, );
-
   return (
     <div
       className={ cn(
@@ -91,7 +87,7 @@ const Phone = ( { className, station, } : TPropsPhone, ) => {
         <div className="flex justify-between items-center w-full">
           <Link
             className="cursor-pointer"
-            href={ `/${ currentStationIndex - 1 }` }
+            href={ `/${ station.id - 1 }` }
           >
             <FaChevronLeft
               color="white"
@@ -106,7 +102,7 @@ const Phone = ( { className, station, } : TPropsPhone, ) => {
           />
           <Link
             className="cursor-pointer"
-            href={ `/${ currentStationIndex + 1 }` }
+            href={ `/${ station.id + 1 }` }
           >
             <FaChevronRight
               color="white"
