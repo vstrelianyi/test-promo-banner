@@ -83,7 +83,7 @@ const Phone = ( { className, station, } : TPropsPhone, ) => {
 
       { /* PHONE MAIN */ }
       <div className="PhoneMain flex flex-col justify-center items-center pt-[30px] mb-[10px] w-full">
-        <span className="text-white text-[18px] font-[600] text-center mb-[20px]">{ station.title }</span>
+        <span className="text-white text-[18px] font-[600] text-center mb-[20px] truncate max-w-[180px]">{ station.title }</span>
         <div className="flex justify-between items-center w-full">
           <Link
             className="cursor-pointer"

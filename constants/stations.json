@@ -58,5 +58,23 @@
     "title": "Talk Radio 1010",
     "logo": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=400&fit=crop&crop=center",
     "color": "#2E8B57"
+  },
+	{
+    "id": 11,
+    "title": "The Morning Show with Mike and Sarah - Your Daily Dose of Entertainment",
+    "logo": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400&h=400&fit=crop&crop=center",
+    "color": "#FF8C00"
+  },
+  {
+    "id": 12,
+    "title": "Metropolitan Symphony Orchestra Classical Music Broadcasting Network",
+    "logo": "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=400&h=400&fit=crop&crop=center",
+    "color": "#4B0082"
+  },
+  {
+    "id": 13,
+    "title": "International World Music and Cultural Exchange Radio Station 88.7 FM",
+    "logo": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop&crop=center",
+    "color": "#228B22"
   }
 ]
